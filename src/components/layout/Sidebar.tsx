@@ -4,8 +4,6 @@ import {
   LayoutDashboardIcon, 
   DatabaseIcon, 
   FileIcon, 
-  Settings2Icon, 
-  ShieldIcon, 
   BarChart3Icon, 
   HelpCircleIcon, 
   LogOutIcon 
@@ -38,14 +36,12 @@ const Sidebar: React.FC<SidebarProps> = ({
   const usagePercentage = Math.round((storageUsed / storageTotal) * 100);
   
   const topMenuItems = [
-    { icon: <LayoutDashboardIcon size={18} />, label: "Dashboard", onClick: () => onSelectBucket(null) },
+    { icon: <LayoutDashboardIcon size={18} />, label: "Dashboard", onClick: () => onMenuItemClick("dashboard") },
     { icon: <DatabaseIcon size={18} />, label: "All Buckets", onClick: () => onSelectBucket(null) }
   ];
   
   const bottomMenuItems = [
     { icon: <BarChart3Icon size={18} />, label: "Analytics", value: "analytics" },
-    { icon: <Settings2Icon size={18} />, label: "Settings", value: "settings" },
-    { icon: <ShieldIcon size={18} />, label: "Access Control", value: "access-control" },
     { icon: <HelpCircleIcon size={18} />, label: "Help & Support", value: "help" },
   ];
   
@@ -57,7 +53,11 @@ const Sidebar: React.FC<SidebarProps> = ({
             <button
               key={item.label}
               onClick={item.onClick}
-              className={`sidebar-item w-full ${!activeBucket && item.label === "All Buckets" ? "active" : ""}`}
+              className={`sidebar-item w-full ${
+                (activeMenuItem === "dashboard" && item.label === "Dashboard") || 
+                (!activeBucket && !activeMenuItem && item.label === "All Buckets") ? 
+                "active" : ""
+              }`}
             >
               {item.icon}
               <span className={`${!isOpen && 'hidden'}`}>{item.label}</span>
@@ -104,7 +104,9 @@ const Sidebar: React.FC<SidebarProps> = ({
               <span className="text-muted-foreground">Storage</span>
               <span className="font-medium">{usagePercentage}%</span>
             </div>
-            <Progress value={usagePercentage} className="h-2" />
+            <Progress value={usagePercentage} className="h-2 bg-gray-200">
+              <div className="h-full bg-hostdime-orange" style={{ width: `${usagePercentage}%` }}></div>
+            </Progress>
             <div className="flex justify-between text-xs text-muted-foreground">
               <span>{formatBytes(storageUsed)} used</span>
               <span>{formatBytes(storageFree)} free</span>
@@ -112,7 +114,9 @@ const Sidebar: React.FC<SidebarProps> = ({
           </div>
         ) : (
           <div className="text-center">
-            <Progress value={usagePercentage} className="h-1 mb-1" />
+            <Progress value={usagePercentage} className="h-1 mb-1 bg-gray-200">
+              <div className="h-full bg-hostdime-orange" style={{ width: `${usagePercentage}%` }}></div>
+            </Progress>
             <div className="text-xs text-muted-foreground">{usagePercentage}%</div>
           </div>
         )}

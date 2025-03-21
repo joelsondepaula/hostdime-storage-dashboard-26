@@ -1,14 +1,33 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { BellIcon, MenuIcon, SearchIcon, User2Icon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { 
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger
+} from "@/components/ui/dropdown-menu";
 
 interface NavbarProps {
   toggleSidebar: () => void;
 }
 
 const Navbar: React.FC<NavbarProps> = ({ toggleSidebar }) => {
+  const [notifications, setNotifications] = useState([
+    { id: 1, text: "New bucket created", read: false },
+    { id: 2, text: "Object uploaded successfully", read: false },
+    { id: 3, text: "Storage limit at 75%", read: true }
+  ]);
+
+  const unreadCount = notifications.filter(n => !n.read).length;
+
+  const markAllAsRead = () => {
+    setNotifications(prev => prev.map(n => ({ ...n, read: true })));
+  };
+
   return (
     <header className="border-b bg-white/80 backdrop-blur-md sticky top-0 z-10 h-16">
       <div className="flex items-center justify-between px-4 md:px-6 h-full">
@@ -30,7 +49,7 @@ const Navbar: React.FC<NavbarProps> = ({ toggleSidebar }) => {
               fill="none" 
               xmlns="http://www.w3.org/2000/svg"
             >
-              <circle cx="50" cy="50" r="46" fill="#0066B3" />
+              <circle cx="50" cy="50" r="46" fill="#FF5800" />
               <path 
                 d="M34 66V34H50C56.6 34 62 39.4 62 46C62 52.6 56.6 58 50 58H42V66H34Z" 
                 fill="white" 
@@ -41,7 +60,7 @@ const Navbar: React.FC<NavbarProps> = ({ toggleSidebar }) => {
               />
             </svg>
             <span className="text-lg font-bold tracking-tight hidden md:block">
-              HostDime <span className="text-hostdime-blue">Object Storage</span>
+              HostDime <span className="text-hostdime-orange">Object Storage</span>
             </span>
           </a>
         </div>
@@ -56,17 +75,68 @@ const Navbar: React.FC<NavbarProps> = ({ toggleSidebar }) => {
         </div>
         
         <div className="flex items-center gap-2 md:gap-4">
-          <Button variant="ghost" size="icon" className="relative">
-            <BellIcon className="h-5 w-5" />
-            <span className="sr-only">Notifications</span>
-            <span className="absolute top-1 right-1.5 w-2 h-2 bg-hostdime-blue rounded-full"></span>
-          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="icon" className="relative">
+                <BellIcon className="h-5 w-5" />
+                <span className="sr-only">Notifications</span>
+                {unreadCount > 0 && (
+                  <span className="absolute top-1 right-1.5 w-2 h-2 bg-hostdime-orange rounded-full"></span>
+                )}
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-80">
+              <div className="flex items-center justify-between p-2">
+                <h3 className="font-medium">Notifications</h3>
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  onClick={markAllAsRead} 
+                  className="text-xs text-hostdime-orange hover:text-hostdime-orange/80"
+                >
+                  Mark all as read
+                </Button>
+              </div>
+              <DropdownMenuSeparator />
+              {notifications.length > 0 ? (
+                <>
+                  {notifications.map((notification) => (
+                    <DropdownMenuItem key={notification.id} className="p-3">
+                      <div className="flex items-start gap-2">
+                        {!notification.read && (
+                          <div className="w-2 h-2 mt-1 rounded-full bg-hostdime-orange flex-shrink-0" />
+                        )}
+                        <div className={!notification.read ? "font-medium" : "text-muted-foreground"}>
+                          {notification.text}
+                        </div>
+                      </div>
+                    </DropdownMenuItem>
+                  ))}
+                </>
+              ) : (
+                <div className="p-4 text-center text-muted-foreground">
+                  No notifications
+                </div>
+              )}
+            </DropdownMenuContent>
+          </DropdownMenu>
           
-          <div className="bg-hostdime-light hover:bg-hostdime-light/80 cursor-pointer rounded-full p-0.5">
-            <div className="bg-hostdime-blue text-white rounded-full h-8 w-8 flex items-center justify-center">
-              <User2Icon className="h-4 w-4" />
-            </div>
-          </div>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <div className="bg-hostdime-light hover:bg-hostdime-light/80 cursor-pointer rounded-full p-0.5">
+                <div className="bg-hostdime-orange text-white rounded-full h-8 w-8 flex items-center justify-center">
+                  <User2Icon className="h-4 w-4" />
+                </div>
+              </div>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem>Profile</DropdownMenuItem>
+              <DropdownMenuItem>Account Settings</DropdownMenuItem>
+              <DropdownMenuItem>Billing</DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem className="text-destructive">Log Out</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
     </header>

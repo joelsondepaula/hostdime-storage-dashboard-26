@@ -15,11 +15,9 @@ import {
   createBucket, 
   deleteBucket,
   uploadObject,
-  deleteObject,
-  Bucket,
-  StorageObject
+  deleteObject
 } from "@/utils/api";
-import { AlertCircle, BarChart3, HelpCircle, Settings2, ShieldAlert } from "lucide-react";
+import { BarChart3, HardDriveIcon, HelpCircle, LayoutDashboardIcon } from "lucide-react";
 
 const Index = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -172,10 +170,77 @@ const Index = () => {
 
     if (activeMenuItem) {
       switch (activeMenuItem) {
+        case 'dashboard':
+          return (
+            <div className="space-y-6">
+              <h1 className="text-2xl font-bold">Dashboard</h1>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="bg-white rounded-lg shadow p-6 border border-gray-100">
+                  <div className="flex items-center gap-4">
+                    <div className="p-3 bg-hostdime-light rounded-full">
+                      <HardDriveIcon className="h-6 w-6 text-hostdime-orange" />
+                    </div>
+                    <div>
+                      <h3 className="text-sm font-medium text-muted-foreground">Total Storage</h3>
+                      <p className="text-2xl font-bold">{usage ? usage.total / 1024 / 1024 / 1024 : 0} GB</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="bg-white rounded-lg shadow p-6 border border-gray-100">
+                  <div className="flex items-center gap-4">
+                    <div className="p-3 bg-hostdime-light rounded-full">
+                      <LayoutDashboardIcon className="h-6 w-6 text-hostdime-orange" />
+                    </div>
+                    <div>
+                      <h3 className="text-sm font-medium text-muted-foreground">Total Buckets</h3>
+                      <p className="text-2xl font-bold">{buckets ? buckets.length : 0}</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="bg-white rounded-lg shadow p-6 border border-gray-100">
+                  <div className="flex items-center gap-4">
+                    <div className="p-3 bg-hostdime-light rounded-full">
+                      <BarChart3 className="h-6 w-6 text-hostdime-orange" />
+                    </div>
+                    <div>
+                      <h3 className="text-sm font-medium text-muted-foreground">Storage Used</h3>
+                      <p className="text-2xl font-bold">{usage ? Math.round((usage.used / usage.total) * 100) : 0}%</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="bg-white rounded-lg shadow p-6 border border-gray-100">
+                <h2 className="text-lg font-semibold mb-4">Recent Buckets</h2>
+                {buckets && buckets.length > 0 ? (
+                  <div className="space-y-2">
+                    {buckets.slice(0, 5).map((bucket) => (
+                      <div 
+                        key={bucket.name} 
+                        className="p-3 border rounded-md flex items-center justify-between cursor-pointer hover:bg-gray-50"
+                        onClick={() => setSelectedBucket(bucket.name)}
+                      >
+                        <div className="flex items-center gap-2">
+                          <HardDriveIcon className="h-4 w-4 text-muted-foreground" />
+                          <span>{bucket.name}</span>
+                        </div>
+                        <span className="text-xs text-muted-foreground">View</span>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-muted-foreground">No buckets created yet.</p>
+                )}
+              </div>
+            </div>
+          );
         case 'analytics':
           return (
             <div className="flex flex-col items-center justify-center h-full space-y-4 text-center p-6">
-              <BarChart3 className="w-16 h-16 text-primary" />
+              <BarChart3 className="w-16 h-16 text-hostdime-orange" />
               <h1 className="text-2xl font-bold">Analytics</h1>
               <p className="text-muted-foreground max-w-md">
                 Get insights into your storage usage, object access patterns, and more.
@@ -183,32 +248,10 @@ const Index = () => {
               </p>
             </div>
           );
-        case 'settings':
-          return (
-            <div className="flex flex-col items-center justify-center h-full space-y-4 text-center p-6">
-              <Settings2 className="w-16 h-16 text-primary" />
-              <h1 className="text-2xl font-bold">Settings</h1>
-              <p className="text-muted-foreground max-w-md">
-                Configure your account preferences, security settings, and notification options.
-                The settings feature is coming soon.
-              </p>
-            </div>
-          );
-        case 'access-control':
-          return (
-            <div className="flex flex-col items-center justify-center h-full space-y-4 text-center p-6">
-              <ShieldAlert className="w-16 h-16 text-primary" />
-              <h1 className="text-2xl font-bold">Access Control</h1>
-              <p className="text-muted-foreground max-w-md">
-                Manage permissions, access keys, and security policies for your buckets and objects.
-                The access control feature is coming soon.
-              </p>
-            </div>
-          );
         case 'help':
           return (
             <div className="flex flex-col items-center justify-center h-full space-y-4 text-center p-6">
-              <HelpCircle className="w-16 h-16 text-primary" />
+              <HelpCircle className="w-16 h-16 text-hostdime-orange" />
               <h1 className="text-2xl font-bold">Help & Support</h1>
               <p className="text-muted-foreground max-w-md">
                 Access documentation, FAQs, and customer support resources.

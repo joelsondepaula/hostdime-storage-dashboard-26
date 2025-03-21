@@ -26,10 +26,10 @@ export default {
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
 				hostdime: {
-					blue: '#0066B3',
-					dark: '#00335A',
-					light: '#E6F2FA',
-					accent: '#FF9E1B'
+					orange: '#FF5800',
+					dark: '#333333',
+					light: '#FFF3EB',
+					accent: '#FFA366'
 				},
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
