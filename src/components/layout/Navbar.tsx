@@ -54,24 +54,13 @@ const Navbar: React.FC<NavbarProps> = ({ toggleSidebar, onSearch }) => {
           </Button>
           
           <a href="/" className="flex items-center gap-2">
-            <svg 
-              className="h-8 w-8" 
-              viewBox="0 0 100 100" 
-              fill="none" 
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <circle cx="50" cy="50" r="46" fill="#FF5800" />
-              <path 
-                d="M34 66V34H50C56.6 34 62 39.4 62 46C62 52.6 56.6 58 50 58H42V66H34Z" 
-                fill="white" 
-              />
-              <path 
-                d="M58 66V54H66V66H58Z" 
-                fill="white" 
-              />
-            </svg>
+            <img 
+              src="/lovable-uploads/8137a6f8-2b5b-4f04-982a-0486e5f546cc.png" 
+              alt="HostDime Logo" 
+              className="h-8" 
+            />
             <span className="text-lg font-bold tracking-tight hidden md:block">
-              HostDime <span className="text-hostdime-orange">Object Storage</span>
+              <span className="text-hostdime-orange">Object Storage</span>
             </span>
           </a>
         </div>
@@ -144,8 +133,6 @@ const Navbar: React.FC<NavbarProps> = ({ toggleSidebar, onSearch }) => {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuItem>Profile</DropdownMenuItem>
-              <DropdownMenuItem>Account Settings</DropdownMenuItem>
-              <DropdownMenuItem>Billing</DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem className="text-destructive" onClick={() => navigate("/login")}>Log Out</DropdownMenuItem>
             </DropdownMenuContent>

@@ -13,7 +13,10 @@ interface DashboardProps {
 const Dashboard: React.FC<DashboardProps> = ({ buckets, usage, onSelectBucket }) => {
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold">Painel</h1>
+      <div className="flex items-center gap-4 mb-6">
+        <img src="/lovable-uploads/8137a6f8-2b5b-4f04-982a-0486e5f546cc.png" alt="HostDime Logo" className="h-10" />
+        <h1 className="text-2xl font-bold">Object Storage Dashboard</h1>
+      </div>
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="bg-white rounded-lg shadow p-6 border border-gray-100">
@@ -54,7 +57,7 @@ const Dashboard: React.FC<DashboardProps> = ({ buckets, usage, onSelectBucket })
       </div>
       
       <div className="bg-white rounded-lg shadow p-6 border border-gray-100">
-        <h2 className="text-lg font-semibold mb-4">Buckets Recentes</h2>
+        <h2 className="text-lg font-semibold mb-4">Seus Buckets</h2>
         {buckets && buckets.length > 0 ? (
           <div className="space-y-2">
             {buckets.slice(0, 5).map((bucket) => (

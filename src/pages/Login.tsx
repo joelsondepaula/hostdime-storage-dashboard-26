@@ -41,22 +41,11 @@ const Login = () => {
         <div className="w-full max-w-md space-y-8">
           <div className="text-center">
             <div className="flex justify-center">
-              <svg 
-                className="h-12 w-12" 
-                viewBox="0 0 100 100" 
-                fill="none" 
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <circle cx="50" cy="50" r="46" fill="#FF5800" />
-                <path 
-                  d="M34 66V34H50C56.6 34 62 39.4 62 46C62 52.6 56.6 58 50 58H42V66H34Z" 
-                  fill="white" 
-                />
-                <path 
-                  d="M58 66V54H66V66H58Z" 
-                  fill="white" 
-                />
-              </svg>
+              <img 
+                src="/lovable-uploads/8137a6f8-2b5b-4f04-982a-0486e5f546cc.png" 
+                alt="HostDime Logo" 
+                className="h-12" 
+              />
             </div>
             <h2 className="mt-6 text-3xl font-bold tracking-tight text-gray-900">
               Entre na sua conta
