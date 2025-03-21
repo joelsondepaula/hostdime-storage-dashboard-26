@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { 
   ArrowLeftIcon, 
@@ -134,32 +135,32 @@ const ObjectList: React.FC<ObjectListProps> = ({
         </div>
         <Button onClick={() => setIsUploadDialogOpen(true)}>
           <UploadIcon className="h-4 w-4 mr-2" />
-          Upload Files
+          Enviar Arquivos
         </Button>
       </div>
       
       <div className="glass-panel overflow-hidden">
         <div className="grid grid-cols-12 gap-4 p-4 border-b font-medium text-sm text-muted-foreground">
           <div className="col-span-4 sm:col-span-6 flex items-center gap-1 cursor-pointer" onClick={() => toggleSort("key")}>
-            <span>Name</span>
+            <span>Nome</span>
             {sortField === "key" && (
               sortOrder === "asc" ? <ArrowUpIcon className="h-3 w-3" /> : <ArrowDownIcon className="h-3 w-3" />
             )}
           </div>
           <div className="col-span-3 sm:col-span-2 flex items-center gap-1 cursor-pointer" onClick={() => toggleSort("lastModified")}>
-            <span>Modified</span>
+            <span>Modificado</span>
             {sortField === "lastModified" && (
               sortOrder === "asc" ? <ArrowUpIcon className="h-3 w-3" /> : <ArrowDownIcon className="h-3 w-3" />
             )}
           </div>
           <div className="col-span-2 sm:col-span-2 flex items-center gap-1 cursor-pointer" onClick={() => toggleSort("size")}>
-            <span>Size</span>
+            <span>Tamanho</span>
             {sortField === "size" && (
               sortOrder === "asc" ? <ArrowUpIcon className="h-3 w-3" /> : <ArrowDownIcon className="h-3 w-3" />
             )}
           </div>
           <div className="hidden sm:flex sm:col-span-1 items-center gap-1 cursor-pointer" onClick={() => toggleSort("type")}>
-            <span>Type</span>
+            <span>Tipo</span>
             {sortField === "type" && (
               sortOrder === "asc" ? <ArrowUpIcon className="h-3 w-3" /> : <ArrowDownIcon className="h-3 w-3" />
             )}
@@ -170,11 +171,11 @@ const ObjectList: React.FC<ObjectListProps> = ({
         {sortedObjects.length === 0 ? (
           <div className="py-16 text-center">
             <FileIcon className="h-10 w-10 mx-auto mb-4 text-muted-foreground/60" />
-            <h3 className="font-medium text-lg mb-1">No objects</h3>
-            <p className="text-muted-foreground mb-4">This bucket is empty.</p>
+            <h3 className="font-medium text-lg mb-1">Nenhum objeto</h3>
+            <p className="text-muted-foreground mb-4">Este bucket está vazio.</p>
             <Button size="sm" onClick={() => setIsUploadDialogOpen(true)}>
               <UploadIcon className="h-4 w-4 mr-2" />
-              Upload Files
+              Enviar Arquivos
             </Button>
           </div>
         ) : (
@@ -206,27 +207,27 @@ const ObjectList: React.FC<ObjectListProps> = ({
                 <div className="col-span-3 sm:col-span-1 flex items-center justify-end gap-1">
                   <Button variant="ghost" size="icon" className="h-8 w-8">
                     <Download className="h-4 w-4" />
-                    <span className="sr-only">Download</span>
+                    <span className="sr-only">Baixar</span>
                   </Button>
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button variant="ghost" size="icon" className="h-8 w-8">
                         <MoreVerticalIcon className="h-4 w-4" />
-                        <span className="sr-only">More options</span>
+                        <span className="sr-only">Mais opções</span>
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                       <DropdownMenuItem>
                         <Download className="mr-2 h-4 w-4" />
-                        <span>Download</span>
+                        <span>Baixar</span>
                       </DropdownMenuItem>
                       <DropdownMenuItem>
                         <Clipboard className="mr-2 h-4 w-4" />
-                        <span>Copy URL</span>
+                        <span>Copiar URL</span>
                       </DropdownMenuItem>
                       <DropdownMenuItem>
                         <Link2Icon className="mr-2 h-4 w-4" />
-                        <span>Share</span>
+                        <span>Compartilhar</span>
                       </DropdownMenuItem>
                       <DropdownMenuSeparator />
                       <DropdownMenuItem 
@@ -234,7 +235,7 @@ const ObjectList: React.FC<ObjectListProps> = ({
                         onClick={() => onObjectDelete(object.key)}
                       >
                         <TrashIcon className="mr-2 h-4 w-4" />
-                        <span>Delete</span>
+                        <span>Excluir</span>
                       </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>

@@ -26,13 +26,13 @@ export interface StorageUsage {
 // Mock data
 const mockBuckets: Bucket[] = [
   {
-    name: "documents",
+    name: "documentos",
     creationDate: "2023-05-15T09:24:00Z",
     objectCount: 152,
     size: 1073741824 // 1GB
   },
   {
-    name: "images",
+    name: "imagens",
     creationDate: "2023-06-22T14:30:00Z",
     objectCount: 567,
     size: 5368709120 // 5GB
@@ -52,23 +52,23 @@ const mockBuckets: Bucket[] = [
 ];
 
 const mockObjects: Record<string, StorageObject[]> = {
-  "documents": [
-    { key: "report-2023.pdf", lastModified: "2023-08-15T09:24:00Z", size: 5242880, etag: "abc123", type: "application/pdf" },
-    { key: "contract.docx", lastModified: "2023-08-10T14:30:00Z", size: 2097152, etag: "def456", type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document" },
-    { key: "presentation.pptx", lastModified: "2023-07-22T11:15:00Z", size: 10485760, etag: "ghi789", type: "application/vnd.openxmlformats-officedocument.presentationml.presentation" }
+  "documentos": [
+    { key: "relatorio-2023.pdf", lastModified: "2023-08-15T09:24:00Z", size: 5242880, etag: "abc123", type: "application/pdf" },
+    { key: "contrato.docx", lastModified: "2023-08-10T14:30:00Z", size: 2097152, etag: "def456", type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document" },
+    { key: "apresentacao.pptx", lastModified: "2023-07-22T11:15:00Z", size: 10485760, etag: "ghi789", type: "application/vnd.openxmlformats-officedocument.presentationml.presentation" }
   ],
-  "images": [
-    { key: "profile.jpg", lastModified: "2023-08-20T15:45:00Z", size: 1048576, etag: "jkl012", type: "image/jpeg" },
+  "imagens": [
+    { key: "perfil.jpg", lastModified: "2023-08-20T15:45:00Z", size: 1048576, etag: "jkl012", type: "image/jpeg" },
     { key: "banner.png", lastModified: "2023-08-18T12:30:00Z", size: 2097152, etag: "mno345", type: "image/png" },
     { key: "logo.svg", lastModified: "2023-08-05T09:15:00Z", size: 524288, etag: "pqr678", type: "image/svg+xml" }
   ],
   "backups": [
     { key: "database-2023-08-20.sql", lastModified: "2023-08-20T00:00:00Z", size: 1073741824, etag: "stu901", type: "application/sql" },
-    { key: "files-2023-08-13.zip", lastModified: "2023-08-13T00:00:00Z", size: 2147483648, etag: "vwx234", type: "application/zip" }
+    { key: "arquivos-2023-08-13.zip", lastModified: "2023-08-13T00:00:00Z", size: 2147483648, etag: "vwx234", type: "application/zip" }
   ],
   "logs": [
-    { key: "access-2023-08-20.log", lastModified: "2023-08-20T23:59:59Z", size: 10485760, etag: "yza567", type: "text/plain" },
-    { key: "error-2023-08-20.log", lastModified: "2023-08-20T23:59:59Z", size: 5242880, etag: "bcd890", type: "text/plain" }
+    { key: "acesso-2023-08-20.log", lastModified: "2023-08-20T23:59:59Z", size: 10485760, etag: "yza567", type: "text/plain" },
+    { key: "erro-2023-08-20.log", lastModified: "2023-08-20T23:59:59Z", size: 5242880, etag: "bcd890", type: "text/plain" }
   ]
 };
 
@@ -101,7 +101,7 @@ export const createBucket = async (name: string): Promise<Bucket> => {
   
   // Check if bucket already exists
   if (mockBuckets.some(b => b.name === name)) {
-    throw new Error(`Bucket '${name}' already exists`);
+    throw new Error(`Bucket '${name}' já existe`);
   }
   
   const newBucket: Bucket = {
@@ -115,8 +115,8 @@ export const createBucket = async (name: string): Promise<Bucket> => {
   mockObjects[name] = [];
   
   toast({
-    title: "Bucket Created",
-    description: `Bucket '${name}' has been created successfully.`,
+    title: "Bucket Criado",
+    description: `Bucket '${name}' foi criado com sucesso.`,
   });
   
   return newBucket;
@@ -127,15 +127,15 @@ export const deleteBucket = async (name: string): Promise<void> => {
   
   const index = mockBuckets.findIndex(b => b.name === name);
   if (index === -1) {
-    throw new Error(`Bucket '${name}' not found`);
+    throw new Error(`Bucket '${name}' não encontrado`);
   }
   
   mockBuckets.splice(index, 1);
   delete mockObjects[name];
   
   toast({
-    title: "Bucket Deleted",
-    description: `Bucket '${name}' has been deleted successfully.`,
+    title: "Bucket Excluído",
+    description: `Bucket '${name}' foi excluído com sucesso.`,
   });
 };
 
@@ -143,7 +143,7 @@ export const uploadObject = async (bucketName: string, file: File): Promise<Stor
   await delay(1500);
   
   if (!mockBuckets.some(b => b.name === bucketName)) {
-    throw new Error(`Bucket '${bucketName}' not found`);
+    throw new Error(`Bucket '${bucketName}' não encontrado`);
   }
   
   const newObject: StorageObject = {
@@ -170,8 +170,8 @@ export const uploadObject = async (bucketName: string, file: File): Promise<Stor
   mockObjects[bucketName].push(newObject);
   
   toast({
-    title: "Upload Complete",
-    description: `${file.name} has been uploaded successfully.`,
+    title: "Upload Concluído",
+    description: `${file.name} foi enviado com sucesso.`,
   });
   
   return newObject;
@@ -181,12 +181,12 @@ export const deleteObject = async (bucketName: string, objectKey: string): Promi
   await delay(800);
   
   if (!mockBuckets.some(b => b.name === bucketName)) {
-    throw new Error(`Bucket '${bucketName}' not found`);
+    throw new Error(`Bucket '${bucketName}' não encontrado`);
   }
   
   const objectIndex = mockObjects[bucketName]?.findIndex(o => o.key === objectKey);
   if (objectIndex === undefined || objectIndex === -1) {
-    throw new Error(`Object '${objectKey}' not found in bucket '${bucketName}'`);
+    throw new Error(`Objeto '${objectKey}' não encontrado no bucket '${bucketName}'`);
   }
   
   const objectSize = mockObjects[bucketName][objectIndex].size;
@@ -203,8 +203,8 @@ export const deleteObject = async (bucketName: string, objectKey: string): Promi
   mockObjects[bucketName].splice(objectIndex, 1);
   
   toast({
-    title: "Object Deleted",
-    description: `${objectKey} has been deleted successfully.`,
+    title: "Objeto Excluído",
+    description: `${objectKey} foi excluído com sucesso.`,
   });
 };
 
@@ -223,7 +223,7 @@ export const formatBytes = (bytes: number, decimals = 2): string => {
 
 export const formatDate = (dateString: string): string => {
   const date = new Date(dateString);
-  return date.toLocaleDateString('en-US', {
+  return date.toLocaleDateString('pt-BR', {
     year: 'numeric',
     month: 'short',
     day: 'numeric',

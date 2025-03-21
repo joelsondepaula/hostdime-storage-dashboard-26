@@ -173,7 +173,7 @@ const Index = () => {
         case 'dashboard':
           return (
             <div className="space-y-6">
-              <h1 className="text-2xl font-bold">Dashboard</h1>
+              <h1 className="text-2xl font-bold">Painel</h1>
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="bg-white rounded-lg shadow p-6 border border-gray-100">
@@ -182,7 +182,7 @@ const Index = () => {
                       <HardDriveIcon className="h-6 w-6 text-hostdime-orange" />
                     </div>
                     <div>
-                      <h3 className="text-sm font-medium text-muted-foreground">Total Storage</h3>
+                      <h3 className="text-sm font-medium text-muted-foreground">Armazenamento Total</h3>
                       <p className="text-2xl font-bold">{usage ? usage.total / 1024 / 1024 / 1024 : 0} GB</p>
                     </div>
                   </div>
@@ -194,7 +194,7 @@ const Index = () => {
                       <LayoutDashboardIcon className="h-6 w-6 text-hostdime-orange" />
                     </div>
                     <div>
-                      <h3 className="text-sm font-medium text-muted-foreground">Total Buckets</h3>
+                      <h3 className="text-sm font-medium text-muted-foreground">Total de Buckets</h3>
                       <p className="text-2xl font-bold">{buckets ? buckets.length : 0}</p>
                     </div>
                   </div>
@@ -206,7 +206,7 @@ const Index = () => {
                       <BarChart3 className="h-6 w-6 text-hostdime-orange" />
                     </div>
                     <div>
-                      <h3 className="text-sm font-medium text-muted-foreground">Storage Used</h3>
+                      <h3 className="text-sm font-medium text-muted-foreground">Armazenamento Usado</h3>
                       <p className="text-2xl font-bold">{usage ? Math.round((usage.used / usage.total) * 100) : 0}%</p>
                     </div>
                   </div>
@@ -214,7 +214,7 @@ const Index = () => {
               </div>
               
               <div className="bg-white rounded-lg shadow p-6 border border-gray-100">
-                <h2 className="text-lg font-semibold mb-4">Recent Buckets</h2>
+                <h2 className="text-lg font-semibold mb-4">Buckets Recentes</h2>
                 {buckets && buckets.length > 0 ? (
                   <div className="space-y-2">
                     {buckets.slice(0, 5).map((bucket) => (
@@ -227,12 +227,12 @@ const Index = () => {
                           <HardDriveIcon className="h-4 w-4 text-muted-foreground" />
                           <span>{bucket.name}</span>
                         </div>
-                        <span className="text-xs text-muted-foreground">View</span>
+                        <span className="text-xs text-muted-foreground">Visualizar</span>
                       </div>
                     ))}
                   </div>
                 ) : (
-                  <p className="text-muted-foreground">No buckets created yet.</p>
+                  <p className="text-muted-foreground">Nenhum bucket criado ainda.</p>
                 )}
               </div>
             </div>
@@ -241,10 +241,10 @@ const Index = () => {
           return (
             <div className="flex flex-col items-center justify-center h-full space-y-4 text-center p-6">
               <BarChart3 className="w-16 h-16 text-hostdime-orange" />
-              <h1 className="text-2xl font-bold">Analytics</h1>
+              <h1 className="text-2xl font-bold">Análises</h1>
               <p className="text-muted-foreground max-w-md">
-                Get insights into your storage usage, object access patterns, and more.
-                The analytics feature is coming soon.
+                Obtenha insights sobre o uso de armazenamento, padrões de acesso a objetos e muito mais.
+                O recurso de análises estará disponível em breve.
               </p>
             </div>
           );
@@ -252,11 +252,14 @@ const Index = () => {
           return (
             <div className="flex flex-col items-center justify-center h-full space-y-4 text-center p-6">
               <HelpCircle className="w-16 h-16 text-hostdime-orange" />
-              <h1 className="text-2xl font-bold">Help & Support</h1>
+              <h1 className="text-2xl font-bold">Ajuda e Suporte</h1>
               <p className="text-muted-foreground max-w-md">
-                Access documentation, FAQs, and customer support resources.
-                The help and support feature is coming soon.
+                Acesse documentação, FAQs e recursos de suporte ao cliente.
+                Para abrir um chamado, entre em contato com nosso suporte.
               </p>
+              <Button className="mt-4 bg-hostdime-orange hover:bg-hostdime-orange/90">
+                Abrir Chamado de Suporte
+              </Button>
             </div>
           );
         default:

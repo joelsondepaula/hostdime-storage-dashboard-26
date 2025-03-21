@@ -15,18 +15,18 @@ const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
   
   useEffect(() => {
-    // Check if user is logged in
+    // Verifica se o usuário está logado
     const user = localStorage.getItem("user");
     setIsAuthenticated(!!user);
   }, []);
   
   if (isAuthenticated === null) {
-    // Still checking auth status
-    return <div className="flex items-center justify-center h-screen">Loading...</div>;
+    // Ainda verificando o status de autenticação
+    return <div className="flex items-center justify-center h-screen">Carregando...</div>;
   }
   
   if (!isAuthenticated) {
-    // If not authenticated, redirect to login
+    // Se não estiver autenticado, redireciona para o login
     return <Navigate to="/login" replace />;
   }
   
@@ -46,7 +46,7 @@ const App = () => (
               <Index />
             </ProtectedRoute>
           } />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          {/* ADICIONE TODAS AS ROTAS PERSONALIZADAS ACIMA DA ROTA CATCH-ALL "*" */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

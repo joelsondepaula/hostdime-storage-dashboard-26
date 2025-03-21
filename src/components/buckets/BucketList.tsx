@@ -88,36 +88,36 @@ const BucketList: React.FC<BucketListProps> = ({
       <div className="flex justify-between items-center mb-6">
         <div>
           <h1 className="text-2xl font-semibold tracking-tight">Object Storage</h1>
-          <p className="text-muted-foreground">Manage your buckets and objects</p>
+          <p className="text-muted-foreground">Gerencie seus buckets e objetos</p>
         </div>
         <Button onClick={() => setIsCreateDialogOpen(true)}>
           <PlusIcon className="h-4 w-4 mr-2" />
-          Create Bucket
+          Criar Bucket
         </Button>
       </div>
       
       <div className="glass-panel overflow-hidden">
         <div className="grid grid-cols-12 gap-4 p-4 border-b font-medium text-sm text-muted-foreground">
           <div className="col-span-3 sm:col-span-4 flex items-center gap-1 cursor-pointer" onClick={() => toggleSort("name")}>
-            <span>Name</span>
+            <span>Nome</span>
             {sortField === "name" && (
               sortOrder === "asc" ? <ArrowUpIcon className="h-3 w-3" /> : <ArrowDownIcon className="h-3 w-3" />
             )}
           </div>
           <div className="col-span-3 sm:col-span-3 flex items-center gap-1 cursor-pointer" onClick={() => toggleSort("creationDate")}>
-            <span>Created</span>
+            <span>Criado</span>
             {sortField === "creationDate" && (
               sortOrder === "asc" ? <ArrowUpIcon className="h-3 w-3" /> : <ArrowDownIcon className="h-3 w-3" />
             )}
           </div>
           <div className="col-span-3 sm:col-span-2 flex items-center gap-1 cursor-pointer" onClick={() => toggleSort("objectCount")}>
-            <span>Objects</span>
+            <span>Objetos</span>
             {sortField === "objectCount" && (
               sortOrder === "asc" ? <ArrowUpIcon className="h-3 w-3" /> : <ArrowDownIcon className="h-3 w-3" />
             )}
           </div>
           <div className="col-span-2 sm:col-span-2 flex items-center gap-1 cursor-pointer" onClick={() => toggleSort("size")}>
-            <span>Size</span>
+            <span>Tamanho</span>
             {sortField === "size" && (
               sortOrder === "asc" ? <ArrowUpIcon className="h-3 w-3" /> : <ArrowDownIcon className="h-3 w-3" />
             )}
@@ -128,11 +128,11 @@ const BucketList: React.FC<BucketListProps> = ({
         {sortedBuckets.length === 0 ? (
           <div className="py-16 text-center">
             <DatabaseIcon className="h-10 w-10 mx-auto mb-4 text-muted-foreground/60" />
-            <h3 className="font-medium text-lg mb-1">No buckets</h3>
-            <p className="text-muted-foreground mb-4">You haven't created any buckets yet.</p>
+            <h3 className="font-medium text-lg mb-1">Nenhum bucket</h3>
+            <p className="text-muted-foreground mb-4">Você ainda não criou nenhum bucket.</p>
             <Button size="sm" onClick={() => setIsCreateDialogOpen(true)}>
               <PlusIcon className="h-4 w-4 mr-2" />
-              Create Bucket
+              Criar Bucket
             </Button>
           </div>
         ) : (
@@ -164,16 +164,16 @@ const BucketList: React.FC<BucketListProps> = ({
                     <DropdownMenuTrigger asChild>
                       <Button variant="ghost" size="icon" className="h-8 w-8">
                         <MoreVerticalIcon className="h-4 w-4" />
-                        <span className="sr-only">More options</span>
+                        <span className="sr-only">Mais opções</span>
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                       <DropdownMenuItem onClick={() => onBucketSelect(bucket.name)}>
-                        View Contents
+                        Ver Conteúdo
                       </DropdownMenuItem>
                       <DropdownMenuItem>
                         <ShareIcon className="mr-2 h-4 w-4" />
-                        <span>Share</span>
+                        <span>Compartilhar</span>
                       </DropdownMenuItem>
                       <DropdownMenuSeparator />
                       <DropdownMenuItem 
@@ -181,7 +181,7 @@ const BucketList: React.FC<BucketListProps> = ({
                         onClick={() => onBucketDelete(bucket.name)}
                       >
                         <TrashIcon className="mr-2 h-4 w-4" />
-                        <span>Delete</span>
+                        <span>Excluir</span>
                       </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>

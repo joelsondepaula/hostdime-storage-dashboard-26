@@ -17,16 +17,16 @@ const Login = () => {
     setIsLoading(true);
     
     try {
-      // Mock login - in real app this would call an API
+      // Mock login - em um app real isso chamaria uma API
       await new Promise(resolve => setTimeout(resolve, 1000));
       
-      // Store some user info in localStorage for the mock
+      // Armazena algumas informações do usuário no localStorage para o mock
       localStorage.setItem("user", JSON.stringify({ email }));
       
-      toast.success("Logged in successfully!");
+      toast.success("Login realizado com sucesso!");
       navigate("/");
     } catch (error) {
-      toast.error("Failed to log in. Please try again.");
+      toast.error("Falha ao fazer login. Por favor, tente novamente.");
     } finally {
       setIsLoading(false);
     }
@@ -34,7 +34,7 @@ const Login = () => {
 
   return (
     <div className="min-h-screen grid md:grid-cols-2 bg-gray-50">
-      {/* Left side - form */}
+      {/* Lado esquerdo - formulário */}
       <div className="flex items-center justify-center px-6 py-12 md:px-10 lg:px-20">
         <div className="w-full max-w-md space-y-8">
           <div className="text-center">
@@ -57,17 +57,17 @@ const Login = () => {
               </svg>
             </div>
             <h2 className="mt-6 text-3xl font-bold tracking-tight text-gray-900">
-              Sign in to your account
+              Entre na sua conta
             </h2>
             <p className="mt-2 text-sm text-gray-600">
-              Access your HostDime Object Storage dashboard
+              Acesse seu painel de armazenamento MinIO
             </p>
           </div>
           
           <form onSubmit={handleSubmit} className="mt-8 space-y-6">
             <div className="space-y-4">
               <div>
-                <Label htmlFor="email">Email address</Label>
+                <Label htmlFor="email">Endereço de email</Label>
                 <Input
                   id="email"
                   name="email"
@@ -82,9 +82,9 @@ const Login = () => {
               
               <div>
                 <div className="flex items-center justify-between">
-                  <Label htmlFor="password">Password</Label>
+                  <Label htmlFor="password">Senha</Label>
                   <a href="#" className="text-sm font-medium text-hostdime-orange hover:text-hostdime-orange/80">
-                    Forgot password?
+                    Esqueceu a senha?
                   </a>
                 </div>
                 <Input
@@ -105,44 +105,44 @@ const Login = () => {
               className="w-full bg-hostdime-orange hover:bg-hostdime-orange/90"
               disabled={isLoading}
             >
-              {isLoading ? "Signing in..." : "Sign in"}
+              {isLoading ? "Entrando..." : "Entrar"}
             </Button>
             
             <p className="text-center text-sm text-gray-600">
-              Don't have an account?{" "}
+              Não tem uma conta?{" "}
               <a href="#" className="font-medium text-hostdime-orange hover:text-hostdime-orange/80">
-                Contact sales
+                Contate o suporte
               </a>
             </p>
           </form>
         </div>
       </div>
       
-      {/* Right side - image/branding */}
+      {/* Lado direito - imagem/branding */}
       <div className="hidden md:block bg-hostdime-orange relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-hostdime-orange to-hostdime-dark opacity-90"></div>
         <div className="absolute inset-0 flex flex-col items-center justify-center text-white p-12">
-          <h2 className="text-3xl font-bold mb-6">HostDime Object Storage</h2>
+          <h2 className="text-3xl font-bold mb-6">MinIO Object Storage</h2>
           <div className="max-w-md space-y-4 text-center">
             <p className="text-lg">
-              Secure, scalable, and reliable object storage for all your business needs.
+              Armazenamento de objetos seguro, escalável e confiável para todas as necessidades do seu negócio.
             </p>
             <div className="grid grid-cols-2 gap-4 mt-8">
               <div className="bg-white/10 p-4 rounded-lg">
-                <h3 className="font-medium mb-2">Scalable</h3>
-                <p className="text-sm text-white/80">Store and retrieve any amount of data, anytime.</p>
+                <h3 className="font-medium mb-2">Escalável</h3>
+                <p className="text-sm text-white/80">Armazene e recupere qualquer quantidade de dados, a qualquer momento.</p>
               </div>
               <div className="bg-white/10 p-4 rounded-lg">
-                <h3 className="font-medium mb-2">Secure</h3>
-                <p className="text-sm text-white/80">Advanced security features to protect your data.</p>
+                <h3 className="font-medium mb-2">Seguro</h3>
+                <p className="text-sm text-white/80">Recursos de segurança avançados para proteger seus dados.</p>
               </div>
               <div className="bg-white/10 p-4 rounded-lg">
-                <h3 className="font-medium mb-2">Reliable</h3>
-                <p className="text-sm text-white/80">99.99% uptime with redundant data storage.</p>
+                <h3 className="font-medium mb-2">Confiável</h3>
+                <p className="text-sm text-white/80">99,99% de tempo de atividade com armazenamento de dados redundante.</p>
               </div>
               <div className="bg-white/10 p-4 rounded-lg">
-                <h3 className="font-medium mb-2">Affordable</h3>
-                <p className="text-sm text-white/80">Pay only for what you use with no hidden fees.</p>
+                <h3 className="font-medium mb-2">Acessível</h3>
+                <p className="text-sm text-white/80">Pague apenas pelo que usar, sem taxas ocultas.</p>
               </div>
             </div>
           </div>
