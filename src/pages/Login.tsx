@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
@@ -17,11 +17,13 @@ const Login = () => {
     setIsLoading(true);
     
     try {
-      // Mock login - em um app real isso chamaria uma API
+      // Simulação de login - em um app real faria uma requisição para https://objectminio.hostdime.com.br:9001
+      // Nota: Esta é apenas uma simulação. Em produção, seria necessário implementar a
+      // autenticação real com o MinIO Console
       await new Promise(resolve => setTimeout(resolve, 1000));
       
-      // Armazena algumas informações do usuário no localStorage para o mock
-      localStorage.setItem("user", JSON.stringify({ email }));
+      // Armazena algumas informações do usuário no localStorage para simulação
+      localStorage.setItem("user", JSON.stringify({ username }));
       
       toast.success("Login realizado com sucesso!");
       navigate("/");
@@ -67,15 +69,15 @@ const Login = () => {
           <form onSubmit={handleSubmit} className="mt-8 space-y-6">
             <div className="space-y-4">
               <div>
-                <Label htmlFor="email">Endereço de email</Label>
+                <Label htmlFor="username">Nome de usuário</Label>
                 <Input
-                  id="email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
+                  id="username"
+                  name="username"
+                  type="text"
+                  autoComplete="username"
                   required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
                   className="mt-1"
                 />
               </div>
@@ -110,7 +112,7 @@ const Login = () => {
             
             <p className="text-center text-sm text-gray-600">
               Não tem uma conta?{" "}
-              <a href="#" className="font-medium text-hostdime-orange hover:text-hostdime-orange/80">
+              <a href="https://core.hostdime.com.br" target="_blank" rel="noopener noreferrer" className="font-medium text-hostdime-orange hover:text-hostdime-orange/80">
                 Contate o suporte
               </a>
             </p>

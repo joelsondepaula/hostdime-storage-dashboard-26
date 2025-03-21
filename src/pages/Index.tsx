@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
@@ -258,7 +257,7 @@ const Index = () => {
                 Acesse documentação, FAQs e recursos de suporte ao cliente.
                 Para abrir um chamado, entre em contato com nosso suporte.
               </p>
-              <Button className="mt-4 bg-hostdime-orange hover:bg-hostdime-orange/90">
+              <Button className="mt-4 bg-hostdime-orange hover:bg-hostdime-orange/90" onClick={() => window.open("https://core.hostdime.com.br", "_blank")}>
                 Abrir Chamado de Suporte
               </Button>
             </div>
