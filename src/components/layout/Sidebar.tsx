@@ -20,6 +20,8 @@ interface SidebarProps {
   onSelectBucket: (bucket: string | null) => void;
   storageUsed: number;
   storageTotal: number;
+  onMenuItemClick: (item: string) => void;
+  activeMenuItem: string | null;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({
@@ -28,7 +30,9 @@ const Sidebar: React.FC<SidebarProps> = ({
   activeBucket, 
   onSelectBucket,
   storageUsed,
-  storageTotal
+  storageTotal,
+  onMenuItemClick,
+  activeMenuItem
 }) => {
   const storageFree = storageTotal - storageUsed;
   const usagePercentage = Math.round((storageUsed / storageTotal) * 100);
@@ -39,10 +43,10 @@ const Sidebar: React.FC<SidebarProps> = ({
   ];
   
   const bottomMenuItems = [
-    { icon: <BarChart3Icon size={18} />, label: "Analytics" },
-    { icon: <Settings2Icon size={18} />, label: "Settings" },
-    { icon: <ShieldIcon size={18} />, label: "Access Control" },
-    { icon: <HelpCircleIcon size={18} />, label: "Help & Support" },
+    { icon: <BarChart3Icon size={18} />, label: "Analytics", value: "analytics" },
+    { icon: <Settings2Icon size={18} />, label: "Settings", value: "settings" },
+    { icon: <ShieldIcon size={18} />, label: "Access Control", value: "access-control" },
+    { icon: <HelpCircleIcon size={18} />, label: "Help & Support", value: "help" },
   ];
   
   return (
@@ -83,7 +87,8 @@ const Sidebar: React.FC<SidebarProps> = ({
           {bottomMenuItems.map((item) => (
             <button
               key={item.label}
-              className="sidebar-item w-full"
+              onClick={() => onMenuItemClick(item.value)}
+              className={`sidebar-item w-full ${activeMenuItem === item.value ? "active" : ""}`}
             >
               {item.icon}
               <span className={`${!isOpen && 'hidden'}`}>{item.label}</span>

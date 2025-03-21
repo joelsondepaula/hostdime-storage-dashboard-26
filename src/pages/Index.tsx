@@ -19,10 +19,12 @@ import {
   Bucket,
   StorageObject
 } from "@/utils/api";
+import { AlertCircle, BarChart3, HelpCircle, Settings2, ShieldAlert } from "lucide-react";
 
 const Index = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [selectedBucket, setSelectedBucket] = useState<string | null>(null);
+  const [activeMenuItem, setActiveMenuItem] = useState<string | null>(null);
   const queryClient = useQueryClient();
   
   // Responsive sidebar handling
@@ -121,6 +123,12 @@ const Index = () => {
   
   const handleSelectBucket = (bucket: string | null) => {
     setSelectedBucket(bucket);
+    setActiveMenuItem(null);
+  };
+  
+  const handleMenuItemClick = (item: string) => {
+    setActiveMenuItem(item);
+    setSelectedBucket(null);
   };
   
   const handleCreateBucket = async (name: string) => {
@@ -142,6 +150,93 @@ const Index = () => {
       await deleteObjectMutation.mutateAsync({ bucketName: selectedBucket, objectKey });
     }
   };
+
+  // Render the appropriate content based on activeMenuItem
+  const renderContent = () => {
+    if (isLoadingBuckets || isLoadingUsage) {
+      return <PageLoader />;
+    }
+
+    if (selectedBucket) {
+      return (
+        <ObjectList 
+          bucketName={selectedBucket}
+          objects={objects}
+          isLoading={isLoadingObjects}
+          onBack={() => setSelectedBucket(null)}
+          onObjectUpload={handleUploadObject}
+          onObjectDelete={handleDeleteObject}
+        />
+      );
+    }
+
+    if (activeMenuItem) {
+      switch (activeMenuItem) {
+        case 'analytics':
+          return (
+            <div className="flex flex-col items-center justify-center h-full space-y-4 text-center p-6">
+              <BarChart3 className="w-16 h-16 text-primary" />
+              <h1 className="text-2xl font-bold">Analytics</h1>
+              <p className="text-muted-foreground max-w-md">
+                Get insights into your storage usage, object access patterns, and more.
+                The analytics feature is coming soon.
+              </p>
+            </div>
+          );
+        case 'settings':
+          return (
+            <div className="flex flex-col items-center justify-center h-full space-y-4 text-center p-6">
+              <Settings2 className="w-16 h-16 text-primary" />
+              <h1 className="text-2xl font-bold">Settings</h1>
+              <p className="text-muted-foreground max-w-md">
+                Configure your account preferences, security settings, and notification options.
+                The settings feature is coming soon.
+              </p>
+            </div>
+          );
+        case 'access-control':
+          return (
+            <div className="flex flex-col items-center justify-center h-full space-y-4 text-center p-6">
+              <ShieldAlert className="w-16 h-16 text-primary" />
+              <h1 className="text-2xl font-bold">Access Control</h1>
+              <p className="text-muted-foreground max-w-md">
+                Manage permissions, access keys, and security policies for your buckets and objects.
+                The access control feature is coming soon.
+              </p>
+            </div>
+          );
+        case 'help':
+          return (
+            <div className="flex flex-col items-center justify-center h-full space-y-4 text-center p-6">
+              <HelpCircle className="w-16 h-16 text-primary" />
+              <h1 className="text-2xl font-bold">Help & Support</h1>
+              <p className="text-muted-foreground max-w-md">
+                Access documentation, FAQs, and customer support resources.
+                The help and support feature is coming soon.
+              </p>
+            </div>
+          );
+        default:
+          return <BucketList 
+            buckets={buckets}
+            isLoading={isLoadingBuckets}
+            onBucketSelect={handleSelectBucket}
+            onBucketCreate={handleCreateBucket}
+            onBucketDelete={handleDeleteBucket}
+          />;
+      }
+    }
+
+    return (
+      <BucketList 
+        buckets={buckets}
+        isLoading={isLoadingBuckets}
+        onBucketSelect={handleSelectBucket}
+        onBucketCreate={handleCreateBucket}
+        onBucketDelete={handleDeleteBucket}
+      />
+    );
+  };
   
   return (
     <div className="flex h-screen flex-col">
@@ -155,29 +250,12 @@ const Index = () => {
           onSelectBucket={handleSelectBucket}
           storageUsed={usage?.used || 0}
           storageTotal={usage?.total || 1}
+          onMenuItemClick={handleMenuItemClick}
+          activeMenuItem={activeMenuItem}
         />
         
         <main className="flex-1 overflow-y-auto p-6 animate-fade-in">
-          {isLoadingBuckets || isLoadingUsage ? (
-            <PageLoader />
-          ) : selectedBucket ? (
-            <ObjectList 
-              bucketName={selectedBucket}
-              objects={objects}
-              isLoading={isLoadingObjects}
-              onBack={() => setSelectedBucket(null)}
-              onObjectUpload={handleUploadObject}
-              onObjectDelete={handleDeleteObject}
-            />
-          ) : (
-            <BucketList 
-              buckets={buckets}
-              isLoading={isLoadingBuckets}
-              onBucketSelect={handleSelectBucket}
-              onBucketCreate={handleCreateBucket}
-              onBucketDelete={handleDeleteBucket}
-            />
-          )}
+          {renderContent()}
         </main>
       </div>
     </div>
