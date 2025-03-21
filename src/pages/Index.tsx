@@ -7,6 +7,7 @@ import Sidebar from "@/components/layout/Sidebar";
 import BucketList from "@/components/buckets/BucketList";
 import ObjectList from "@/components/objects/ObjectList";
 import { PageLoader } from "@/components/ui/Loader";
+import { Button } from "@/components/ui/button";
 
 import { 
   fetchBuckets, 
