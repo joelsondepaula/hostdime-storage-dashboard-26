@@ -13,6 +13,7 @@ interface MainLayoutProps {
   storageTotal: number;
   onMenuItemClick: (item: string) => void;
   activeMenuItem: string | null;
+  onSearch?: (term: string) => void;
 }
 
 const MainLayout: React.FC<MainLayoutProps> = ({
@@ -23,7 +24,8 @@ const MainLayout: React.FC<MainLayoutProps> = ({
   storageUsed,
   storageTotal,
   onMenuItemClick,
-  activeMenuItem
+  activeMenuItem,
+  onSearch
 }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
@@ -51,7 +53,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({
 
   return (
     <div className="flex h-screen flex-col">
-      <Navbar toggleSidebar={handleToggleSidebar} />
+      <Navbar toggleSidebar={handleToggleSidebar} onSearch={onSearch} />
       
       <div className="flex flex-1 overflow-hidden">
         <Sidebar 

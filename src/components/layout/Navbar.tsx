@@ -10,12 +10,16 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
+import { useNavigate } from "react-router-dom";
 
 interface NavbarProps {
   toggleSidebar: () => void;
+  onSearch?: (term: string) => void;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ toggleSidebar }) => {
+const Navbar: React.FC<NavbarProps> = ({ toggleSidebar, onSearch }) => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate();
   const [notifications, setNotifications] = useState([
     { id: 1, text: "New bucket created", read: false },
     { id: 2, text: "Object uploaded successfully", read: false },
@@ -26,6 +30,13 @@ const Navbar: React.FC<NavbarProps> = ({ toggleSidebar }) => {
 
   const markAllAsRead = () => {
     setNotifications(prev => prev.map(n => ({ ...n, read: true })));
+  };
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (onSearch && searchTerm.trim()) {
+      onSearch(searchTerm.trim());
+    }
   };
 
   return (
@@ -65,14 +76,16 @@ const Navbar: React.FC<NavbarProps> = ({ toggleSidebar }) => {
           </a>
         </div>
         
-        <div className="relative max-w-sm w-full hidden md:block">
+        <form onSubmit={handleSearch} className="relative max-w-sm w-full hidden md:block">
           <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground h-4 w-4" />
           <Input 
             type="search" 
             placeholder="Search buckets and objects..." 
             className="pl-9 bg-background border-none" 
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
           />
-        </div>
+        </form>
         
         <div className="flex items-center gap-2 md:gap-4">
           <DropdownMenu>
@@ -134,7 +147,7 @@ const Navbar: React.FC<NavbarProps> = ({ toggleSidebar }) => {
               <DropdownMenuItem>Account Settings</DropdownMenuItem>
               <DropdownMenuItem>Billing</DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem className="text-destructive">Log Out</DropdownMenuItem>
+              <DropdownMenuItem className="text-destructive" onClick={() => navigate("/login")}>Log Out</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>

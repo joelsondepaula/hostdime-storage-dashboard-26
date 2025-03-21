@@ -1,13 +1,13 @@
 
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 
 import { PageLoader } from "@/components/ui/Loader";
 import BucketList from "@/components/buckets/BucketList";
 import ObjectList from "@/components/objects/ObjectList";
 import Dashboard from "@/components/dashboard/Dashboard";
-import Analytics from "@/components/analytics/Analytics";
 import Support from "@/components/help/Support";
 import MainLayout from "@/components/layout/MainLayout";
+import { Button } from "@/components/ui/button";
 
 import { useBuckets } from "@/hooks/useBuckets";
 import { useObjects } from "@/hooks/useObjects";
@@ -16,6 +16,7 @@ import { useStorageUsage } from "@/hooks/useStorageUsage";
 const Index = () => {
   const [selectedBucket, setSelectedBucket] = useState<string | null>(null);
   const [activeMenuItem, setActiveMenuItem] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState<string | null>(null);
   
   // Get data and handlers from custom hooks
   const { buckets, isLoadingBuckets, handleCreateBucket, handleDeleteBucket } = useBuckets();
@@ -26,14 +27,35 @@ const Index = () => {
   const handleSelectBucket = (bucket: string | null) => {
     setSelectedBucket(bucket);
     setActiveMenuItem(null);
+    setSearchTerm(null);
   };
   
   const handleMenuItemClick = (item: string) => {
     setActiveMenuItem(item);
     setSelectedBucket(null);
+    setSearchTerm(null);
   };
+
+  // Search handler
+  const handleSearch = useCallback((term: string) => {
+    setSearchTerm(term);
+    setActiveMenuItem(null);
+  }, []);
   
-  // Render the appropriate content based on activeMenuItem
+  // Filter buckets and objects based on search term
+  const filteredBuckets = searchTerm && buckets 
+    ? buckets.filter(bucket => 
+        bucket.name.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    : buckets;
+
+  const filteredObjects = searchTerm && objects 
+    ? objects.filter(obj => 
+        obj.key.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    : objects;
+
+  // Render the appropriate content based on activeMenuItem and searchTerm
   const renderContent = () => {
     if (isLoadingBuckets || isLoadingUsage) {
       return <PageLoader />;
@@ -43,7 +65,7 @@ const Index = () => {
       return (
         <ObjectList 
           bucketName={selectedBucket}
-          objects={objects}
+          objects={searchTerm ? filteredObjects : objects}
           isLoading={isLoadingObjects}
           onBack={() => setSelectedBucket(null)}
           onObjectUpload={handleUploadObject}
@@ -62,14 +84,12 @@ const Index = () => {
               onSelectBucket={handleSelectBucket}
             />
           );
-        case 'analytics':
-          return <Analytics />;
         case 'help':
           return <Support />;
         default:
           return (
             <BucketList 
-              buckets={buckets}
+              buckets={filteredBuckets}
               isLoading={isLoadingBuckets}
               onBucketSelect={handleSelectBucket}
               onBucketCreate={handleCreateBucket}
@@ -77,6 +97,27 @@ const Index = () => {
             />
           );
       }
+    }
+
+    // If there's a search term but no specific bucket selected, show the bucket list with filtered results
+    if (searchTerm) {
+      return (
+        <>
+          <div className="mb-6">
+            <div className="flex items-center justify-between">
+              <h2 className="text-xl font-semibold">Search Results for "{searchTerm}"</h2>
+              <Button variant="outline" onClick={() => setSearchTerm(null)}>Clear Search</Button>
+            </div>
+          </div>
+          <BucketList 
+            buckets={filteredBuckets}
+            isLoading={isLoadingBuckets}
+            onBucketSelect={handleSelectBucket}
+            onBucketCreate={handleCreateBucket}
+            onBucketDelete={handleDeleteBucket}
+          />
+        </>
+      );
     }
 
     return (
@@ -99,6 +140,7 @@ const Index = () => {
       storageTotal={usage?.total || 1}
       onMenuItemClick={handleMenuItemClick}
       activeMenuItem={activeMenuItem}
+      onSearch={handleSearch}
     >
       {renderContent()}
     </MainLayout>

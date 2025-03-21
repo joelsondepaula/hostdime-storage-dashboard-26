@@ -4,7 +4,6 @@ import {
   LayoutDashboardIcon, 
   DatabaseIcon, 
   FileIcon, 
-  BarChart3Icon, 
   HelpCircleIcon, 
   LogOutIcon 
 } from "lucide-react";
@@ -41,7 +40,6 @@ const Sidebar: React.FC<SidebarProps> = ({
   ];
   
   const bottomMenuItems = [
-    { icon: <BarChart3Icon size={18} />, label: "Analytics", value: "analytics" },
     { icon: <HelpCircleIcon size={18} />, label: "Help & Support", value: "help" },
   ];
   
