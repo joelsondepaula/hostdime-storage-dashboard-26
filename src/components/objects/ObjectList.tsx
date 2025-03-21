@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { 
   ArrowLeftIcon, 
@@ -15,7 +14,7 @@ import {
   FileImageIcon,
   FileArchiveIcon,
   FileCodeIcon,
-  FileTableIcon,
+  TableIcon,
   FileBadgeIcon
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -68,7 +67,7 @@ const ObjectList: React.FC<ObjectListProps> = ({
     if (type.startsWith("image/")) {
       return <FileImageIcon className="h-4 w-4 text-blue-500" />;
     } else if (type.startsWith("video/")) {
-      return <FileTableIcon className="h-4 w-4 text-purple-500" />;
+      return <TableIcon className="h-4 w-4 text-purple-500" />;
     } else if (type.startsWith("audio/")) {
       return <FileBadgeIcon className="h-4 w-4 text-green-500" />;
     } else if (type.includes("pdf")) {
